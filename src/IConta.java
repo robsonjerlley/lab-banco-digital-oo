@@ -1,11 +1,12 @@
+import Exceptions.ServiceException;
 
 public interface IConta {
 	
-	void sacar(double valor);
+	void sacar(double valor) throws ServiceException;
 	
-	void depositar(double valor);
+	void depositar(double valor) throws ServiceException;
 	
-	void transferir(double valor, IConta contaDestino);
+	void transferir(double valor, IConta contaDestino) throws ServiceException;
 	
 	void imprimirExtrato();
 }

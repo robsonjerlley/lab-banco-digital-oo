@@ -1,17 +1,33 @@
+import Exceptions.ServiceException;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Cliente venilton = new Cliente();
-		venilton.setNome("Venilton");
+		Cliente cliente = new Cliente();
+		cliente.setNome("cliente");
 		
-		Conta cc = new ContaCorrente(venilton);
-		Conta poupanca = new ContaPoupanca(venilton);
+		Conta cc = new ContaCorrente(cliente);
+		Conta poupanca = new ContaPoupanca(cliente);
 
-		cc.depositar(100);
-		cc.transferir(100, poupanca);
-		
-		cc.imprimirExtrato();
+        try {
+            cc.depositar(0);
+        } catch (ServiceException e) {
+			System.out.println(e.getMessage());
+        }
+
+        try {
+            cc.sacar(50);
+        } catch (ServiceException e) {
+			System.out.println(e.getMessage());
+        }
+
+        try {
+            cc.transferir(100, poupanca);
+        } catch (ServiceException e) {
+			System.out.println(e.getMessage());
+        }
+
+        cc.imprimirExtrato();
 		poupanca.imprimirExtrato();
 	}
 

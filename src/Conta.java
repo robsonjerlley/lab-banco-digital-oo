@@ -1,3 +1,4 @@
+import Exceptions.ServiceException;
 
 public abstract class Conta implements IConta {
 	
@@ -16,19 +17,35 @@ public abstract class Conta implements IConta {
 	}
 
 	@Override
-	public void sacar(double valor) {
+	public void sacar(double valor) throws ServiceException {
+		if(valor <= this.saldo)
 		saldo -= valor;
+		else{
+			throw new ServiceException("Saldo Insuficiente para realizar a operação");
+
+        }
+
 	}
 
 	@Override
-	public void depositar(double valor) {
+	public void depositar(double valor) throws ServiceException {
+		if(valor >0)
 		saldo += valor;
+		else {
+			throw new ServiceException("O valor do depósito deve ser maior que [0.0]");
+		}
 	}
 
 	@Override
-	public void transferir(double valor, IConta contaDestino) {
-		this.sacar(valor);
-		contaDestino.depositar(valor);
+	public void transferir(double valor, IConta contaDestino) throws ServiceException {
+		if(valor <= this.saldo) {
+			this.sacar(valor);
+			contaDestino.depositar(valor);
+
+		}else{
+			throw new ServiceException("Saldo Insuficiente para realizar a operação");
+
+		}
 	}
 
 	public int getAgencia() {
